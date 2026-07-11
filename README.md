@@ -48,9 +48,15 @@ output/                               ← 실행 결과 저장 위치
 
 각 프롬프트는 캡스톤디자인 수업(Design Thinking, Prof. Do-Hyung Park) 강의자료의 프레임워크(POV, HMW, Idea Sheet, Concept Sheet, POINT, VIP&Core Components)를 참고해 재구성함. 강의자료 원문은 재게시하지 않음 — 프레임워크 구조만 프롬프트 형태로 재작성.
 
+## 예시 산출물
+
+실제 인터뷰 데이터(익명 처리)로 E1→A1 전 단계를 완주한 예시: [examples/2026-07-11-goal-pet-saving/](examples/2026-07-11-goal-pet-saving/)
+
+인터뷰 설계 → 실측 인터뷰 → POV 도출·우선순위화 → 아이디어 시트 → 컨셉 시트 → POINT 평가 → New Thinking 반영 갱신 → VIP/Core Components까지 파이프라인의 모든 산출물과 단계 간 데이터 전달을 확인할 수 있다.
+
 ## Roadmap
 
-- [ ] 전 단계를 실제 주제로 완주한 예시 산출물을 `examples/`에 추가
+- [x] 전 단계를 실제 주제로 완주한 예시 산출물을 `examples/`에 추가
 - [ ] 각 스텝을 `.claude/agents/` 서브에이전트로 분리해 컨텍스트 격리를 구조적으로 보장 (현재는 SKILL.md의 실행 규칙에 의존)
 - [ ] 이미지 생성 MCP 연동 시 [I2]/[P2]에서 이미지 파일을 `output/`에 직접 저장
 
