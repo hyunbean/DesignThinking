@@ -1,8 +1,14 @@
 # design-thinking
 
-디자인씽킹 6단계(Empathize → Define → Ideate → Prototype → Test → Assess) 전체를 단계별 프롬프트 파이프라인으로 실행하는 [Claude Code](https://claude.com/claude-code) 스킬.
+디자인씽킹 6단계(Empathize → Define → Ideate → Prototype → Test → Assess) 전체를 스텝별 서브에이전트 파이프라인으로 실행하는 [Claude Code](https://claude.com/claude-code) 스킬.
 
 SMART 목표를 입력하면 인터뷰 설계 → 인사이트 정의 → 아이디어 시트 → 컨셉 시트 → POINT 평가 → 사업성(VIP) 평가까지 산출물이 체인으로 이어진다. 실제 인터뷰 수행 구간만 사람이 개입한다.
+
+| 아이디어 스케치 | 제품 일러스트 | 사용 장면 일러스트 |
+|---|---|---|
+| ![아이디어 스케치](examples/2026-07-11-goal-pet-saving/I2-sketch.png) | ![제품 일러스트](examples/2026-07-11-goal-pet-saving/P2-product.png) | ![사용 장면 일러스트](examples/2026-07-11-goal-pet-saving/P2-usage.png) |
+
+파이프라인 텍스트 산출물에서 [I2]/[P2] 스텝이 자동 생성한 이미지 (Gemini/Nano Banana). 전체 예시: [examples/2026-07-11-goal-pet-saving/](examples/2026-07-11-goal-pet-saving/)
 
 ## 사용법
 
@@ -62,7 +68,7 @@ output/                             ← 실행 결과 저장 위치
 
 ## 예시 산출물
 
-실제 인터뷰 데이터(익명 처리)로 E1→A1 전 단계를 완주한 예시: [examples/2026-07-11-goal-pet-saving/](examples/2026-07-11-goal-pet-saving/)
+실제 인터뷰 데이터(익명 처리)로 E1→A1 전 단계를 완주한 예시(위 이미지 포함): [examples/2026-07-11-goal-pet-saving/](examples/2026-07-11-goal-pet-saving/)
 
 인터뷰 설계 → 실측 인터뷰 → POV 도출·우선순위화 → 아이디어 시트 → 컨셉 시트 → POINT 평가 → New Thinking 반영 갱신 → VIP/Core Components까지 파이프라인의 모든 산출물과 단계 간 데이터 전달을 확인할 수 있다.
 
@@ -71,7 +77,7 @@ output/                             ← 실행 결과 저장 위치
 - [x] 전 단계를 실제 주제로 완주한 예시 산출물을 `examples/`에 추가
 - [x] 각 스텝을 `.claude/agents/` 서브에이전트로 분리해 컨텍스트 격리를 구조적으로 보장
 - [x] Gemini API(Nano Banana) 연동 스크립트로 [I2]/[P2]에서 이미지 파일을 `output/`에 직접 저장
-- [ ] 예시 산출물의 영문 프롬프트로 생성한 실제 스케치 이미지를 `examples/`에 추가
+- [x] 예시 산출물의 영문 프롬프트로 생성한 실제 스케치 이미지를 `examples/`에 추가
 
 ## License
 
