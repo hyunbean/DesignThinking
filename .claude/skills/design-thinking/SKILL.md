@@ -74,10 +74,17 @@ SMART 목표 + 가용 자원
 
 ## 이미지 스텝 ([I2], [P2]) 처리 규칙
 
-Claude Code는 자체적으로 이미지를 생성할 수 없다. 이미지 스텝은 실행 환경에 따라 다음과 같이 처리한다.
+Claude Code는 자체적으로 이미지를 생성할 수 없다. 이미지 스텝은 아래 우선순위로 처리한다. 어느 경로든 **완성형 영문 이미지 프롬프트를 먼저 작성해 `output/`에 저장**하고, 그 프롬프트로 이미지를 만든다.
 
-- **이미지 생성 도구(MCP 등)가 연결된 경우**: 프롬프트 파일의 스타일 가이드라인을 반영해 이미지를 직접 생성하고 `output/` 폴더에 저장한다.
-- **이미지 생성 도구가 없는 경우 (기본)**: 스타일 가이드라인을 전부 반영한 **완성형 영문 이미지 생성 프롬프트**를 산출물로 작성해 저장한다. 사용자가 이 프롬프트를 외부 이미지 모델(Gemini, Midjourney, DALL-E 등)에 붙여넣어 이미지를 얻는다.
+1. **Gemini API (기본 권장)**: 환경변수 `GEMINI_API_KEY`가 설정되어 있으면 `scripts/generate_image.py`를 실행해 이미지를 생성하고 `output/` 폴더에 PNG로 저장한다.
+   ```
+   python .claude/skills/design-thinking/scripts/generate_image.py \
+     --prompt-file output/{실행폴더}/I2-sketch-prompt.txt \
+     --out output/{실행폴더}/I2-sketch.png
+   ```
+   키가 없다고 스크립트가 안내하면(무료 발급: https://aistudio.google.com/apikey), 사용자에게 키 설정을 안내하고 아래 3번으로 진행한다. API 키를 대화에 붙여넣게 하지 말 것.
+2. **이미지 생성 MCP 도구가 연결된 경우**: 해당 도구로 직접 생성하고 `output/`에 저장한다.
+3. **둘 다 없는 경우 (폴백)**: 영문 이미지 프롬프트 자체를 최종 산출물로 저장한다. 사용자가 외부 이미지 모델(Gemini, Midjourney, DALL-E 등)에 붙여넣어 이미지를 얻는다.
 
 ## 실행 모드
 
