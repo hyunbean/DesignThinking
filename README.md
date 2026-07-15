@@ -1,4 +1,4 @@
-# design-thinking
+# Design Thinking Pipeline
 
 디자인씽킹 6단계(Empathize → Define → Ideate → Prototype → Test → Assess) 전체를 스텝별 서브에이전트 파이프라인으로 실행하는 [Claude Code](https://claude.com/claude-code) 스킬.
 
