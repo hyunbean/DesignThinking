@@ -23,6 +23,41 @@ SMART 목표를 입력하면 인터뷰 설계 → 인사이트 정의 → 아이
 
 인자 없이 `/design-thinking`만 입력하면 실행 가능한 단계 목록을 보여준다.
 
+### MCP 서버로 쓰기 (Claude Code 밖에서)
+
+같은 방법론을 **MCP를 지원하는 어떤 클라이언트에서든** 쓸 수 있도록 MCP 서버를 제공한다. 의존성 없이 Node.js만 있으면 실행된다.
+
+```jsonc
+// Claude Desktop: claude_desktop_config.json
+{
+  "mcpServers": {
+    "design-thinking": {
+      "command": "node",
+      "args": ["/절대/경로/DesignThinking/mcp/server.mjs"]
+    }
+  }
+}
+```
+
+Claude Code에 붙일 때는 `claude mcp add design-thinking -- node /절대/경로/DesignThinking/mcp/server.mjs`.
+
+| 도구 | 하는 일 |
+|---|---|
+| `list_stages` | 11개 스텝의 순서·입력·출력과 **사람이 개입해야 하는 지점**을 반환 |
+| `get_pipeline_overview` | 단계 간 데이터 전달 규칙, 이미지 스텝 처리, 산출물 저장 규칙 |
+| `get_stage_guide(stage)` | 해당 스텝의 작업 지침 전문 (역할·임무·출력 양식·규칙) |
+| `get_stage_example(stage)` | 해당 스텝의 실제 완성 산출물 예시 (형식 참고용) |
+
+**이 서버는 LLM을 호출하지 않는다.** 각 스텝의 지침과 예시를 제공할 뿐이고, 산출물 생성은 클라이언트 쪽 모델이 수행한다. 서버가 보유한 자산은 모델이 아니라 **방법론**(무엇을 어떤 순서로, 무엇을 다음 단계에 넘겨서, 어디서 사람을 기다려야 하는지)이다. 덕분에 서브에이전트 기능이 없는 클라이언트에서도 같은 파이프라인을 돌릴 수 있다.
+
+프로토콜 테스트:
+
+```bash
+printf '%s\n' \
+  '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2024-11-05","capabilities":{}}}' \
+  '{"jsonrpc":"2.0","id":2,"method":"tools/list"}' | node mcp/server.mjs
+```
+
 ### 이미지 생성 설정 (선택)
 
 스케치([I2])와 컨셉 일러스트([P2])를 실제 이미지 파일로 받으려면 Gemini API 키(무료)를 설정한다.
@@ -52,6 +87,8 @@ SMART 목표를 입력하면 인터뷰 설계 → 인사이트 정의 → 아이
     dt-p2-illustration.md           ← [P2] 컨셉 일러스트 (제품뷰+사용장면)
     dt-t1-point.md                  ← [T1] POINT 프레임워크 평가
     dt-a1-vip.md                    ← [A1] VIP 평가 + Core Components
+mcp/
+  server.mjs                        ← MCP 서버 (의존성 0, stdio JSON-RPC) — 위 자산을 도구로 노출
 output/                             ← 실행 결과 저장 위치
 ```
 
@@ -78,6 +115,7 @@ output/                             ← 실행 결과 저장 위치
 - [x] 각 스텝을 `.claude/agents/` 서브에이전트로 분리해 컨텍스트 격리를 구조적으로 보장
 - [x] Gemini API(Nano Banana) 연동 스크립트로 [I2]/[P2]에서 이미지 파일을 `output/`에 직접 저장
 - [x] 예시 산출물의 영문 프롬프트로 생성한 실제 스케치 이미지를 `examples/`에 추가
+- [x] MCP 서버(`mcp/server.mjs`)로 파이프라인을 노출해 Claude Code 밖의 클라이언트에서도 사용 가능하게
 
 ## License
 
